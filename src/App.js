@@ -1,74 +1,55 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const foodILike = [
-    {
-        id:1,
-        name: "Kimchi",
-        isFav: "like",
-        image:
-            "http://aeriskitchen.com/wp-content/uploads/2008/09/kimchi_bokkeumbap_02-.jpg",
-        rating: 5
-    },
-    {
-        id:2,
-        name: "Samgyeopsal",
-        isFav: "like",
-
-        image:
-            "https://3.bp.blogspot.com/-hKwIBxIVcQw/WfsewX3fhJI/AAAAAAAAALk/yHxnxFXcfx4ZKSfHS_RQNKjw3bAC03AnACLcBGAs/s400/DSC07624.jpg",
-        rating: 4.2
-    },
-    {
-        id:3,
-        name: "Bibimbap",
-        isFav: "dont like",
-        image:
-            "http://cdn-image.myrecipes.com/sites/default/files/styles/4_3_horizontal_-_1200x900/public/image/recipes/ck/12/03/bibimbop-ck-x.jpg?itok=RoXlp6Xb",
-        rating: 3.5
-    },
-    {
-        id:4,
-        name: "Doncasu",
-        isFav: "dont like",
-        image:
-            "https://s3-media3.fl.yelpcdn.com/bphoto/7F9eTTQ_yxaWIRytAu5feA/ls.jpg",
-        rating: 4
-    },
-    {
-        id:5,
-        name: "Kimbap",
-        isFav: "like",
-        image:
-            "http://cdn2.koreanbapsang.com/wp-content/uploads/2012/05/DSC_1238r-e1454170512295.jpg",
-        rating: 4.4
+class App extends React.Component {
+    // class가 생성될 때 호
+    constructor(props) {
+        super(props);
+        console.log("constructor")
     }
-];
+    state = {
+        count:0
+    };
 
-function Food({name, isFav, image, rating}) {
-    return (
-        <div>
-            <h1>I {isFav} {name}</h1>
-            <h4>{rating} / 5.0 </h4>
-            <img src={image} alt={name}/>
-        </div>
-    )
-}
+    add = () => {
+        console.log("add");
+        this.setState(current => ({
+            count: current.count + 1
+        }));
+    };
+    minus = () => {
+        this.setState( (current) => ({
+           count: current.count - 1
+        }));
+    };
+    render() {
+        console.log("rendering");
+        return (
+            <div>
+                <h1>
+                    The number is {this.state.count}
+                </h1>
+                <button onClick={this.add}>Add</button>
+                <button onClick={this.minus}>Minus</button>
+            </div>
+        );
+    };
 
-Food.propTypes = {
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired
-}
+    // 컴포넌트가 render후에 호출
+    componentDidMount() {
+        console.log("component rendered");
+    }
 
-function App() {
-  return (
-    <div>
-        {foodILike.map(dish => (
-            <Food key={dish.id} name={dish.name} image={dish.image} rating={dish.rating}/>
-        ))}
-    </div>
-  );
+    // props나 state가 변경되었을 때 호출
+    // state -> render -> update
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("just updated");
+    }
+
+    // 컴포넌트가 종료되었을때 호출
+    componentWillUnmount() {
+        console.log("component unmount");
+    }
 }
 
 export default App;
